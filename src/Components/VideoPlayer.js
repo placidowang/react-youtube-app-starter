@@ -3,7 +3,7 @@ import React from 'react'
 export default class Video extends React.Component {
 
   render() {
-    console.log(this.props.video)
+    // console.log(this.props.video)
     const embedUrl = `https://www.youtube.com/embed/${this.props.video.id.videoId}`
     return(
       <div style={{margin: '20px', width: '900px'}}>
