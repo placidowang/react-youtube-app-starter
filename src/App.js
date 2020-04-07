@@ -4,7 +4,7 @@ import SearchBar from './Components/SearchBar.js'
 import SideContainer from './SideContainer.js'
 import keys from './keys.js'
 // import sampleResponse from './sampleResponse.json'
-import debounce from 'lodash.debounce'
+import _ from 'lodash'
 
 class App extends Component {
   constructor() {
@@ -22,7 +22,6 @@ class App extends Component {
       },
       searchTerm: 'workout',
       videos: []
-      
     }
   }
 
@@ -31,10 +30,9 @@ class App extends Component {
     this.getVideos()
   }
 
-  searchVideos = (e) => {
-    e.preventDefault()
-    // console.log(e.target[])
-    const searchTerm = e.target[0].value
+  searchVideos = (searchTerm) => {
+    // e.preventDefault()
+    // const searchTerm = e.target[0].value
     this.setState({
       searchTerm: searchTerm
     },
@@ -43,15 +41,14 @@ class App extends Component {
       this.getVideos()
     }
     )
-    e.target.reset()
+    // e.target.reset()
   }
 
-  search = debounce(e => { // page is refreshing when you call this method; can't handle passing in events? try to move searchVideos(e) content after e.preventDefault() and before e.target.reset() here? then call this method inside searchVideos(e)?
-    debugger
-    e.preventDefault()
-    console.log('bouncing')
-    this.searchVideos(e);
-  }, 200)
+  search = _.debounce(term => { // page is refreshing when you call this method; can't handle passing in events? try to move searchVideos(e) content after e.preventDefault() and before e.target.reset() here? then call this method inside searchVideos(e)?
+    // debugger
+    // console.log('bouncing')
+    this.searchVideos(term);
+  }, 2000)
   
   getVideos = () => {
     fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&key=${keys.API_KEY}&q=${this.state.searchTerm}&type=video`)
@@ -74,7 +71,7 @@ class App extends Component {
     return (
       <div>
         <SearchBar
-          searchVideos={this.searchVideos} />
+          searchVideos={this.search} />
         <MainContainer
           video={this.state.video} />
         <SideContainer

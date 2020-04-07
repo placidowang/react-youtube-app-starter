@@ -11,6 +11,7 @@ export default class VideoPreview extends React.Component {
         {/* video preview */}
         <img src={video.thumbnails.default.url} alt={video.title}></img>
         <p>{video.title}</p>
+        <br></br>
       </div>
     )
   }
